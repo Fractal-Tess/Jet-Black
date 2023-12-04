@@ -1,4 +1,13 @@
 <!-- YOU CAN DELETE EVERYTHING IN THIS PAGE -->
+<script lang="ts">
+	import Pocketbase from 'pocketbase';
+
+	const auth = async () => {
+		const pb = new Pocketbase('https://project-l-data.app.jet-black.xyz');
+		const userData = await pb.collection('users').authWithOAuth2({ provider: 'google' });
+		console.log(userData);
+	};
+</script>
 
 <div class="container dev h-full mx-auto flex justify-center items-center">
 	<div class="space-y-10 text-center flex flex-col items-center">
@@ -24,6 +33,7 @@
 			</a>
 		</div>
 	</div>
+	<button on:click={auth}>Gmail login</button>
 </div>
 
 <style lang="postcss">
