@@ -1,5 +1,5 @@
 import { PUBLIC_POCKETBASE_URL } from '$env/static/public'
-import type { User } from '$lib/types'
+import type { User } from '$lib/user'
 import type { Handle } from '@sveltejs/kit'
 import PocketBase from 'pocketbase'
 

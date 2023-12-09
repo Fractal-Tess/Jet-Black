@@ -3,7 +3,8 @@
     AppShell,
     AppBar,
     Drawer,
-    type DrawerSettings
+    type DrawerSettings,
+    Avatar
   } from '@skeletonlabs/skeleton'
   import Fa from 'svelte-fa'
   import {
@@ -13,9 +14,10 @@
     faMagnifyingGlass
   } from '@fortawesome/free-solid-svg-icons'
 
-  import { pb } from '$lib/pocketbase'
-
   import { getDrawerStore } from '@skeletonlabs/skeleton'
+  export let data: PageData
+  import type { PageData } from './$types'
+  import { pb } from '$lib/pocketbase'
 
   const drawerStore = getDrawerStore()
   const drawerSettings: DrawerSettings = {
@@ -54,21 +56,38 @@
     <AppBar>
       <svelte:fragment slot="lead">
         <a href="/" class="block from-primar">
-          <img src="/logo_typo.png" alt="logo" class="h-8 dark:invert" />
+          <img src="/logo.png" alt="logo" class="h-8 dark:invert-0 invert" />
         </a>
       </svelte:fragment>
       <svelte:fragment slot="trail">
         <!-- TODO: Implement a search function -->
         <button class="btn"><Fa icon={faMagnifyingGlass} /></button>
         <button
-          class="btn variant-filled"
+          class="btn variant-filled md:hidden"
           on:click={() => drawerStore.open(drawerSettings)}
         >
           <Fa icon={faBarsStaggered} />
         </button>
+
+        {#if data.user}
+          <Avatar
+            src={pb.files.getUrl(
+              { collectionId: 'users', id: data.user?.id },
+              data.user.avatar,
+              {
+                thumb: '32x32'
+              }
+            )}
+            width="w-8"
+            rounded="rounded-full"
+          />
+          <!-- Display profile -->
+        {:else}
+          <a href="/auth/sign-in" class="btn variant-outline">Вход</a>
+          <a href="/auth/register" class="btn variant-filled">Регистрация</a>
+        {/if}
       </svelte:fragment>
     </AppBar>
   </svelte:fragment>
-  <!-- Page Route Content -->
   <slot />
 </AppShell>

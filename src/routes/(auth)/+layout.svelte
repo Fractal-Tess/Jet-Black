@@ -11,4 +11,10 @@
     </a>
   </section>
   <slot />
+
+  <div class="flex items-center justify-center gap-x-2 text-sm mb-4">
+    <a href="/privacy-polcy"> Политика за поверителност </a>
+    <span>|</span>
+    <a href="/terms"> Условия за ползване</a>
+  </div>
 </main>
