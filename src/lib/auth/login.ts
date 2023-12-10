@@ -1,7 +1,7 @@
 import { z } from 'zod'
 import Result from 'true-myth/result'
 import { asyncTryOrElse } from '$lib/utils'
-import { pb } from '$lib/pocketbase'
+import { pb } from '$lib/pocketbase/pocketbase'
 import type { RecordAuthResponse, RecordModel } from 'pocketbase'
 
 export type LoginAction =

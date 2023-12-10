@@ -1,4 +1,7 @@
 <script lang="ts">
+  import { popup } from '@skeletonlabs/skeleton'
+  import type { PopupSettings } from '@skeletonlabs/skeleton'
+
   import {
     AppShell,
     AppBar,
@@ -8,16 +11,17 @@
   } from '@skeletonlabs/skeleton'
   import Fa from 'svelte-fa'
   import {
-    faAtom,
     faBarsStaggered,
-    faCalculator,
     faMagnifyingGlass
   } from '@fortawesome/free-solid-svg-icons'
-
-  import { getDrawerStore } from '@skeletonlabs/skeleton'
-  export let data: PageData
   import type { PageData } from './$types'
-  import { pb } from '$lib/pocketbase'
+  import { pb } from '$lib/pocketbase/pocketbase'
+  import { getDrawerStore } from '@skeletonlabs/skeleton'
+  import AvatarPopUp from './AvatarPopUp.svelte'
+  import MobileDrawer from './MobileDrawer.svelte'
+  export let data: PageData
+
+  const { user } = data
 
   const drawerStore = getDrawerStore()
   const drawerSettings: DrawerSettings = {
@@ -25,29 +29,18 @@
     width: 'w-[280px] md:w-[480px]',
     padding: 'p-4'
   }
+
+  const userAvatarPopup: PopupSettings = {
+    // Represents the type of event that opens/closed the popup
+    event: 'click',
+    // Matches the data-popup value on your popup element
+    target: 'userAvatarPopup',
+    // Defines which side of your trigger the popup will appear
+    placement: 'bottom'
+  }
 </script>
 
-<Drawer>
-  <div class=" flex flex-col h-full pt-4">
-    <span class="text-token text-opacity-50">Уроци, упражнения, тестове</span>
-    <ul class="list-dl flex-1 text-xl">
-      <li class="list-item">
-        <a href="/math" class="flex items-center">
-          <span class="badge"><Fa size="1.5x" icon={faCalculator} /></span>
-          <span class="flex-auto">Математика</span>
-        </a>
-      </li>
-
-      <li class="list-item">
-        <a href="/math" class="flex items-center">
-          <span class="badge"><Fa size="1.5x" icon={faAtom} /></span>
-          <span class="flex-auto">Физика</span>
-        </a>
-      </li>
-      <!-- ... -->
-    </ul>
-  </div>
-</Drawer>
+<MobileDrawer />
 
 <!-- App Shell -->
 <AppShell>
@@ -56,7 +49,7 @@
     <AppBar>
       <svelte:fragment slot="lead">
         <a href="/" class="block from-primar">
-          <img src="/logo.png" alt="logo" class="h-8 dark:invert-0 invert" />
+          <img src="/logo.png" alt="logo" class="h-10 dark:invert-0 invert" />
         </a>
       </svelte:fragment>
       <svelte:fragment slot="trail">
@@ -69,18 +62,22 @@
           <Fa icon={faBarsStaggered} />
         </button>
 
-        {#if data.user}
-          <Avatar
-            src={pb.files.getUrl(
-              { collectionId: 'users', id: data.user?.id },
-              data.user.avatar,
-              {
-                thumb: '32x32'
-              }
-            )}
-            width="w-8"
-            rounded="rounded-full"
-          />
+        {#if user}
+          {@const avatarUrl = pb.files.getUrl(
+            { collectionId: 'users', id: data.user?.id },
+            user.avatar,
+            {
+              thumb: '100x100'
+            }
+          )}
+          <button
+            class="transition-all after:inset-0 relative after:absolute
+               after:pointer-events-none after:select-none after:hover:outline-dashed after:hover:animate-spin-slow after:rounded-full after:hover:outline-1"
+            use:popup={userAvatarPopup}
+          >
+            <AvatarPopUp {avatarUrl} {user} />
+            <Avatar src={avatarUrl} width="w-10" rounded="rounded-full" />
+          </button>
           <!-- Display profile -->
         {:else}
           <a href="/auth/sign-in" class="btn variant-outline">Вход</a>

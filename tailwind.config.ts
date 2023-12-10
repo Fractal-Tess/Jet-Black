@@ -14,7 +14,11 @@ export default {
     )
   ],
   theme: {
-    extend: {}
+    extend: {
+      animation: {
+        'spin-slow': 'spin 9s linear infinite'
+      }
+    }
   },
   plugins: [
     forms,

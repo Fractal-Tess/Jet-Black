@@ -2,6 +2,7 @@ import type { LayoutServerLoad } from './$types'
 
 export const load = (async ({ locals }) => {
   return {
-    user: locals.user
+    user: locals.user,
+    pbCookie: locals.pb.authStore.exportToCookie()
   }
 }) satisfies LayoutServerLoad
