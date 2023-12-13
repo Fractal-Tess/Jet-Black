@@ -1,6 +1,9 @@
 <script lang="ts">
+  // Import global styles
   import '../app.postcss'
+
   import { Toast, initializeStores } from '@skeletonlabs/skeleton'
+  import { storePopup } from '@skeletonlabs/skeleton'
   import {
     computePosition,
     autoUpdate,
@@ -10,20 +13,18 @@
     arrow
   } from '@floating-ui/dom'
 
-  import { storePopup } from '@skeletonlabs/skeleton'
-  import { PUBLIC_POCKETBASE_URL } from '$env/static/public'
-  import PocketBase from 'pocketbase'
-  import { setContext } from 'svelte'
-  import type { LayoutData } from './$types'
-  export let data: LayoutData
-
   storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow })
   initializeStores()
-
-  const pb = new PocketBase(PUBLIC_POCKETBASE_URL)
-  pb.authStore.loadFromCookie(data.pbCookie)
-  setContext('pb', pb)
 </script>
 
+<!-- Background -->
+<div
+  class="absolute inset-0 -z-50 !bg-[url('/bg.svg')] opacity-25 bg-repeat bg-center bg-[length:500px_500px] animate-bg-move-fast md:animate-bg-move-slow"
+></div>
+
+<!-- Global Toast -->
 <Toast />
+<!-- Not using drawers or modals here to allow dynamic culling of html -->
+
+<!-- Main slow -->
 <slot />
