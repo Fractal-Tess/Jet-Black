@@ -15,15 +15,22 @@ export default {
   ],
   theme: {
     extend: {
+      keyframes: {
+        scrollbg: {
+          '0%': { 'background-position': '0 0' },
+          '100%': { 'background-position': '-100% -100%' }
+        }
+      },
       animation: {
-        'spin-slow': 'spin 9s linear infinite'
+        'spin-slow': 'spin 9s linear infinite',
+        'bg-move-fast': 'scrollbg 90s linear infinite',
+        'bg-move-slow': 'scrollbg 120s linear infinite'
       }
     }
   },
   plugins: [
     forms,
     typography,
-
     skeleton({
       themes: {
         preset: [
