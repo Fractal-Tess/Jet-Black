@@ -1,27 +1,21 @@
 <script lang="ts">
-  import { shortcut, type ShortcutEventDetail } from '@svelte-put/shortcut'
-
+  import { shortcut } from '@svelte-put/shortcut'
   import { getToastStore, popup } from '@skeletonlabs/skeleton'
-
   import type { PopupSettings } from '@skeletonlabs/skeleton'
-
   import {
     AppShell,
     AppBar,
-    Drawer,
     type DrawerSettings,
     Avatar
   } from '@skeletonlabs/skeleton'
   import Fa from 'svelte-fa'
-  import {
-    faBarsStaggered,
-    faMagnifyingGlass
-  } from '@fortawesome/free-solid-svg-icons'
+  import { faBarsStaggered } from '@fortawesome/free-solid-svg-icons'
   import type { PageData } from './$types'
   import { pb } from '$lib/pocketbase/pocketbase'
   import { getDrawerStore } from '@skeletonlabs/skeleton'
-  import AvatarPopUp from './AvatarPopUp.svelte'
-  import MobileDrawer from './MobileDrawer.svelte'
+  import AvatarPopUp from '../../lib/components/AvatarPopUp.svelte'
+  import { onMount } from 'svelte'
+  import Drawer from '$lib/components/Drawer.svelte'
   export let data: PageData
 
   const { user } = data
@@ -42,12 +36,17 @@
     placement: 'bottom'
   }
   const toast = getToastStore()
+  // TODO: Implement search functionality
   function search() {
     toast.trigger({
       message: 'Имплементацията на тази функция все още не е приключила',
       background: 'variant-filled-error'
     })
   }
+
+  onMount(() => {
+    drawerStore.open(drawerSettings)
+  })
 </script>
 
 <svelte:window
@@ -60,7 +59,7 @@
     }
   }}
 />
-<MobileDrawer />
+<Drawer />
 
 <!-- App Shell -->
 <AppShell>
@@ -75,19 +74,19 @@
       <svelte:fragment slot="trail">
         <!-- TODO: Implement a search function -->
         <!-- Search button -->
-        <button
+        <!-- <button
           on:click={search}
           class="hidden md:block btn space-x-4 variant-soft hover:variant-soft-primary"
           ><Fa icon={faMagnifyingGlass} />
           <span class="hidden md:block"> Ctrl + K </span></button
-        >
+        > -->
         <button
           class="btn btn-sm md:btn-md variant-filled"
           on:click={() => drawerStore.open(drawerSettings)}
         >
           <Fa icon={faBarsStaggered} />
         </button>
-        <div class="border-l-[1px] opacity-50 block h-8"></div>
+        <div class=" border-l-[1px] opacity-50 block h-8"></div>
         {#if user}
           {@const avatarUrl = pb.files.getUrl(
             { collectionId: 'users', id: data.user?.id },
