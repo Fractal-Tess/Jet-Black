@@ -1,5 +1,8 @@
 <script lang="ts">
-  import { popup } from '@skeletonlabs/skeleton'
+  import { shortcut, type ShortcutEventDetail } from '@svelte-put/shortcut'
+
+  import { getToastStore, popup } from '@skeletonlabs/skeleton'
+
   import type { PopupSettings } from '@skeletonlabs/skeleton'
 
   import {
@@ -38,8 +41,25 @@
     // Defines which side of your trigger the popup will appear
     placement: 'bottom'
   }
+  const toast = getToastStore()
+  function search() {
+    toast.trigger({
+      message: 'Имплементацията на тази функция все още не е приключила',
+      background: 'variant-filled-error'
+    })
+  }
 </script>
 
+<svelte:window
+  use:shortcut={{
+    trigger: {
+      key: 'k',
+      modifier: ['ctrl', 'meta'],
+      callback: search,
+      preventDefault: true
+    }
+  }}
+/>
 <MobileDrawer />
 
 <!-- App Shell -->
@@ -54,14 +74,20 @@
       </svelte:fragment>
       <svelte:fragment slot="trail">
         <!-- TODO: Implement a search function -->
-        <button class="btn"><Fa icon={faMagnifyingGlass} /></button>
+        <!-- Search button -->
         <button
-          class="btn variant-filled md:hidden"
+          on:click={search}
+          class="hidden md:block btn space-x-4 variant-soft hover:variant-soft-primary"
+          ><Fa icon={faMagnifyingGlass} />
+          <span class="hidden md:block"> Ctrl + K </span></button
+        >
+        <button
+          class="btn btn-sm md:btn-md variant-filled"
           on:click={() => drawerStore.open(drawerSettings)}
         >
           <Fa icon={faBarsStaggered} />
         </button>
-
+        <div class="border-l-[1px] opacity-50 block h-8"></div>
         {#if user}
           {@const avatarUrl = pb.files.getUrl(
             { collectionId: 'users', id: data.user?.id },
@@ -80,8 +106,12 @@
           </button>
           <!-- Display profile -->
         {:else}
-          <a href="/auth/sign-in" class="btn variant-outline">Вход</a>
-          <a href="/auth/register" class="btn variant-filled">Регистрация</a>
+          <a href="/auth/sign-in" class="btn btn-sm md:btn-md variant-outline"
+            >Вход</a
+          >
+          <a href="/auth/register" class="btn btn-sm md:btn-md variant-filled"
+            >Регистрация</a
+          >
         {/if}
       </svelte:fragment>
     </AppBar>
