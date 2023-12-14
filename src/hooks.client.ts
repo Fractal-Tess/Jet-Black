@@ -1,5 +1,6 @@
-import { invalidateAll } from '$app/navigation'
 import { pb } from '$lib/pocketbase'
+import { asyncTryOrElse } from '$lib/utils'
+import { Result } from 'true-myth'
 
 pb.authStore.loadFromCookie(document.cookie)
 pb.authStore.onChange(() => {
@@ -7,6 +8,15 @@ pb.authStore.onChange(() => {
     httpOnly: false,
     secure: false
   })
-  invalidateAll()
 })
-if (pb.authStore.isValid) pb.collection('users').authRefresh()
+
+if (pb.authStore.isValid) {
+  const res = await asyncTryOrElse(
+    async () => pb.collection('users').authRefresh(),
+    Result.err
+  )
+  if (res.isErr) {
+    console.log('Auth refresh is error')
+    pb.authStore.clear()
+  }
+}
