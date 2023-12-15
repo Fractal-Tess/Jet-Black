@@ -65,5 +65,5 @@ jobs:
         uses: caprover/deploy-from-github@v1.0.1
         with:
           server: '${{ secrets.CAPROVER_SERVER }}'
-          app: '${{ secrets.WEB_APP_NAME }}'
-          token: '${{ secrets.WEB_APP_TOKEN }}'
+          app: '${{ secrets.WEBSITE_APP_NAME }}'
+          token: '${{ secrets.WEBSITE_APP_TOKEN }}'
