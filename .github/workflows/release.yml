@@ -1,0 +1,69 @@
+name: Web release
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ['release']
+
+jobs:
+  web-release:
+    name: Build & Deploy Web
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.10
+
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          version: 8
+          run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v3
+        name: Setup pnpm cache
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Build
+        env:
+          PUBLIC_TRPC_URL: ${{ vars.PUBLIC_TRPC_URL }}
+          PUBLIC_POCKETBASE_URL: ${{ vars.PUBLIC_POCKETBASE_URL }}
+          PUBLIC_ORIGIN_URL: ${{ vars.PUBLIC_ORIGIN_URL }}
+        run: pnpm turbo run build --filter @indecisive/web
+
+      - uses: a7ul/tar-action@v1.1.0
+        with:
+          command: c
+          cwd: './apps/web'
+          files: |
+            build/
+            captain-definition
+            package.json
+            Dockerfile
+          outPath: deploy.tar
+
+      - name: Deploy App to CapRover
+        uses: caprover/deploy-from-github@v1.0.1
+        with:
+          server: '${{ secrets.CAPROVER_SERVER }}'
+          app: '${{ secrets.WEB_APP_NAME }}'
+          token: '${{ secrets.WEB_APP_TOKEN }}'
