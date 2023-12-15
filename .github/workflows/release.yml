@@ -48,7 +48,7 @@ jobs:
           PUBLIC_TRPC_URL: ${{ vars.PUBLIC_TRPC_URL }}
           PUBLIC_POCKETBASE_URL: ${{ vars.PUBLIC_POCKETBASE_URL }}
           PUBLIC_ORIGIN_URL: ${{ vars.PUBLIC_ORIGIN_URL }}
-        run: pnpm turbo run build --filter @indecisive/web
+        run: pnpm build
 
       - uses: a7ul/tar-action@v1.1.0
         with:
