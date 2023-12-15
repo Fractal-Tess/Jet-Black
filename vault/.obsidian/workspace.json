@@ -11,8 +11,12 @@
             "id": "265c746dacc33b3d",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "Физика/Механика/Динамика/Теория.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ]
@@ -81,6 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "Физика/Механика/Динамика/Теория.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -97,6 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "Физика/Механика/Динамика/Теория.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -118,7 +124,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "Физика/Механика/Динамика/Теория.md"
+              }
             }
           }
         ]
@@ -138,6 +146,16 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "265c746dacc33b3d",
-  "lastOpenFiles": []
+  "active": "1b1fcdc668158662",
+  "lastOpenFiles": [
+    "Физика/Механика/Динамика/Упражнение",
+    "Физика/Механика/Динамика/Теория.md",
+    "Физика/Механика/Закони на Нютон",
+    "Физика/Механика/Динамика",
+    "Физика/Механика/Кинематика",
+    "Физика/Механика",
+    "Математика/Матрици",
+    "Физика",
+    "Математика"
+  ]
 }
