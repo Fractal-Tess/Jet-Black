@@ -1,4 +1,6 @@
-import { PUBLIC_POCKETBASE_URL } from '$env/static/public'
+import { env } from '$env/dynamic/public'
 import PocketBase from 'pocketbase'
+import { building } from '$app/environment'
 
-export const pb = new PocketBase(PUBLIC_POCKETBASE_URL)
+export let pb: PocketBase
+if (!building) pb = new PocketBase(env.PUBLIC_POCKETBASE_URL)
