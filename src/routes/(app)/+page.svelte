@@ -4,15 +4,27 @@
 </script>
 
 <section
-  class="container mx-auto max-w-screen-lg flex items-center min-h-full flex-col justify-center"
+  class="container mx-auto max-w-screen-lg flex items-center min-h-full flex-col justify-center gap-20"
 >
-  <h1 class="h1 gap-8 flex flex-col md:flex-row items-center">
-    Добре дошли в <img
+  <h1 class="h1 flex items-center justify-center gap-8">
+    <span
+      class="bg-gradient-to-br from-blue-500 to-cyan-300 bg-clip-text text-transparent box-decoration-clone"
+      >Добре дошли в
+    </span>
+    <img
       src="/logo_typo.png"
       class="h-20 dark:invert"
       alt="jet-black logo with typography"
     />
   </h1>
+
+  <h2 class="h2">
+    <span
+      class="bg-gradient-to-br from-pink-500 to-violet-500 bg-clip-text text-transparent box-decoration-clone"
+      >Скоро идва!</span
+    >
+  </h2>
+
   <!-- 
   <div class=" grid grid-cols-1 md:grid-cols-12">
     <div class="space-y-4 md:col-span-6 p-4">
