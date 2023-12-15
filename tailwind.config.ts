@@ -28,8 +28,7 @@ export default {
       },
       animation: {
         'spin-slow': 'spin 9s linear infinite',
-        'bg-move-fast': 'scrollbg 90s linear infinite',
-        'bg-move-slow': 'scrollbg 120s linear infinite'
+        'bg-move-fast': 'scrollbg 90s linear infinite'
       }
     }
   },

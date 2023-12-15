@@ -19,7 +19,7 @@
 
 <!-- Background -->
 <div
-  class="absolute inset-0 -z-50 !bg-[url('/bg.svg')] bg-repeat opacity-20 animate-bg-move-fast md:animate-bg-move-slow"
+  class="absolute inset-0 -z-50 !bg-[url('/bg.svg')] bg-repeat opacity-20 animate-bg-move-fast md:animate-none"
 ></div>
 
 <!-- Global Toast -->
