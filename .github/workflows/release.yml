@@ -4,6 +4,8 @@ on:
   workflow_dispatch:
   push:
     branches: ['release']
+    paths:
+      - 'apps/web/**'
 
 jobs:
   web-release:
@@ -43,17 +45,18 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+
       - name: Build
         env:
           PUBLIC_TRPC_URL: ${{ vars.PUBLIC_TRPC_URL }}
           PUBLIC_POCKETBASE_URL: ${{ vars.PUBLIC_POCKETBASE_URL }}
           PUBLIC_ORIGIN_URL: ${{ vars.PUBLIC_ORIGIN_URL }}
-        run: pnpm build
+        run: pnpm turbo build --filter web
 
       - uses: a7ul/tar-action@v1.1.0
         with:
           command: c
-          cwd: './'
+          cwd: './apps/web'
           files: |
             build/
             captain-definition
