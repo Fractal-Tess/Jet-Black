@@ -27,6 +27,7 @@
     "@tailwindcss/typography": "0.5.10",
     "@types/node": "20.10.5",
     "autoprefixer": "10.4.16",
+    "node-addon-api": "^7.0.0",
     "pocketbase": "^0.20.1",
     "postcss": "8.4.32",
     "svelte": "^4.2.8",
