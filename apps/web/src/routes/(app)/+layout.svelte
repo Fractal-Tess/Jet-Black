@@ -11,7 +11,6 @@
   import Fa from 'svelte-fa'
   import { faBarsStaggered } from '@fortawesome/free-solid-svg-icons'
   import type { PageData } from './$types'
-  import { pb } from '$lib/pocketbase/pocketbase'
   import { getDrawerStore } from '@skeletonlabs/skeleton'
   import AvatarPopUp from '../../lib/components/AvatarPopUp.svelte'
   import { onMount } from 'svelte'

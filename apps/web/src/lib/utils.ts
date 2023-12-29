@@ -1,4 +1,3 @@
-import type { RecordModel } from 'pocketbase';
 import { Result } from 'true-myth'
 
 function id<A>(a: A) {
@@ -18,12 +17,3 @@ export function asyncTryOrElse<T extends {}, E>(
 ): Promise<Result<T, unknown>> {
   return fn().then(Result.ok<T, E>, onErr ?? id)
 }
-
-export type PBRecord<T, E = Record<string, unknown>> = RecordModel &
-  T &
-  (E extends Record<string, unknown>
-    ? {
-        expand: { [Key in keyof E]: E[Key] };
-      }
-    : {});
-

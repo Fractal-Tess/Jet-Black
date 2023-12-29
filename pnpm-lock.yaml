@@ -86,6 +86,9 @@ importers:
 
   apps/web:
     devDependencies:
+      '@directus/sdk':
+        specifier: ^14.0.0
+        version: 14.0.0
       '@floating-ui/dom':
         specifier: 1.5.3
         version: 1.5.3
@@ -134,9 +137,6 @@ importers:
       node-addon-api:
         specifier: ^7.0.0
         version: 7.0.0
-      pocketbase:
-        specifier: ^0.20.1
-        version: 0.20.1
       postcss:
         specifier: 8.4.32
         version: 8.4.32
@@ -404,6 +404,11 @@ packages:
       fs-extra: 7.0.1
       human-id: 1.0.2
       prettier: 2.8.8
+    dev: true
+
+  /@directus/sdk@14.0.0:
+    resolution: {integrity: sha512-xxX20VpdwKXR5O1QNo1HXY3hF8sulOjTdio+zWELLGsSnW4asXT32VLGhiPSl9gtZ2ctSnsrU29k5ACYD2WoRQ==}
+    engines: {node: '>=18.0.0'}
     dev: true
 
   /@esbuild/aix-ppc64@0.19.10:

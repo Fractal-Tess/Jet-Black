@@ -3,7 +3,6 @@
 // and what to do when importing types
 declare namespace App {
   interface Locals {
-    pb: import('pocketbase').default
     user: import('$lib/user').User | null
   }
   // interface PageData {}

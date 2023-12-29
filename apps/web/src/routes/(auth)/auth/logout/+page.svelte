@@ -1,13 +1,11 @@
 <script lang="ts">
   import { faCheckCircle, faHome } from '@fortawesome/free-solid-svg-icons'
   import { onMount } from 'svelte'
-  import { pb } from '$lib/pocketbase'
   import Fa from 'svelte-fa'
   import { invalidateAll } from '$app/navigation'
-  // TODO: Add redirect if user is not logged in
 
+  // TODO: Add redirect if user is not logged in
   onMount(async () => {
-    pb.authStore.clear()
     await invalidateAll()
   })
 </script>
