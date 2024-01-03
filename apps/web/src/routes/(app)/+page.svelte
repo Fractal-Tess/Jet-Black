@@ -1,6 +1,10 @@
 <script lang="ts">
+  import type { createDrawerStore } from '$lib/stores'
   import anime from 'animejs'
-  import { onMount } from 'svelte'
+  import { getContext, onMount } from 'svelte'
+  const drawerStore = getContext('jb_drawerStore') as ReturnType<
+    typeof createDrawerStore
+  >
 
   let animationHidden = true
   let animator: HTMLDivElement
@@ -93,12 +97,14 @@
   <title>Home</title>
 </svelte:head>
 <section
-  class="flex lg:h-full h-full items-center justify-center mx-auto container max-lg:justify-end max-lg:flex-col-reverse max-lg:-order-last"
+  class="flex h-full items-center justify-center mx-auto container max-lg:justify-end max-lg:flex-col-reverse max-lg:-order-last select-none"
 >
   <div
-    class={`max-w-md transition-all max-lg:pt-20 flex flex-col gap-y-8 duration-1000 delay-[1500ms] items-center ${
+    class={`max-w-md transition-all max-lg:pt-6 max-lg:mb-6 flex flex-col gap-y-8 duration-700 items-center ${
       mounted ? 'opacity-100' : 'opacity-0'
-    }`}
+    }
+    ${$drawerStore ? 'max-2xl:opacity-0' : 'delay-500'}
+    `}
   >
     <h1 class="h1 mt-0 max-lg:text-center font-extrabold">Jet-Black</h1>
     <p class="opacity-75 max-sm:text-center">
@@ -108,18 +114,24 @@
       курсове в
       <b> TU-Sofia</b>.
     </p>
-    <div class="flex max-lg:justify-center space-x-4">
-      <a href="/learn" class="btn max-md:btn-sm variant-filled-primary"
+    <div class="flex max-lg:justify-center space-x-4 d">
+      <a
+        on:dragstart|preventDefault
+        href="/learn"
+        class="btn max-md:btn-sm variant-outline-primary"
         >Започни
       </a>
-      <a href="/about" class="btn max-md:btn-sm variant-ringed-primary"
+      <a
+        on:dragstart|preventDefault
+        href="/about"
+        class="btn max-md:btn-sm variant-filled-secondary"
         >Научи повече
       </a>
     </div>
   </div>
   <div
     bind:this={animator}
-    class={`hero-figure ${
+    class={`hero-figure my-auto ${
       mounted
         ? 'after:opacity-100 before:opacity-100'
         : 'after:opacity-0 before:opacity-0'

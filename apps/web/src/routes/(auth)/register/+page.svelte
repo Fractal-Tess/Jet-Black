@@ -8,7 +8,6 @@
   } from 'sveltekit-superforms/client'
   import { ProgressRadial } from '@skeletonlabs/skeleton'
   import { getToastStore } from '@skeletonlabs/skeleton'
-  import { login } from '$lib/auth/login'
   import { goto } from '$app/navigation'
   import { register, registerSchema } from '$lib/auth/register'
 
@@ -22,22 +21,23 @@
       SPA: true,
       validators: registerSchema,
       onUpdate: async ({ form }) => {
-        if (form.valid) {
-          showSpinner = true
-          const res = await register(form.data)
-          if (res.isErr) {
-            if (res.error.path === 'toast')
-              toastStore.trigger({
-                message: res.error.message,
-                background: 'variant-filled-error'
-              })
-            else setError(form, res.error.path, res.error.message)
-          } else {
-            await goto('/', {
-              invalidateAll: true
+        if (!form.valid) return form
+
+        showSpinner = true
+        const res = await register(form.data)
+        if (res.isErr) {
+          if (res.error.path === 'toast')
+            toastStore.trigger({
+              message: res.error.message,
+              background: 'variant-filled-error'
             })
-          }
+          else setError(form, res.error.path, res.error.message)
+        } else {
+          // await goto('/', {
+          // invalidateAll: true
+          // })
         }
+
         showSpinner = false
         return form
       }
@@ -130,7 +130,7 @@
 
   <div class="grid gap-4 w-full">
     <button
-      on:click={() => login({ method: 'GOOGLE' })}
+      on:click={() => {}}
       class="flex justify-center items-center gap-x-4 border-[1px] w-full h-10"
     >
       <span><Fa icon={faGoogle} /></span>

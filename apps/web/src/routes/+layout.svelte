@@ -1,5 +1,4 @@
 <script lang="ts">
-  // Import global styles
   import '../app.postcss'
 
   import { Toast, initializeStores } from '@skeletonlabs/skeleton'
@@ -12,9 +11,20 @@
     flip,
     arrow
   } from '@floating-ui/dom'
+  import { createDrawerStore } from '$lib/stores'
+  import { onMount, setContext } from 'svelte'
+  import SubjectDrawer from '$lib/components/SubjectDrawer.svelte'
 
+  import type { LayoutData } from './$types'
+  import { onNavigate } from '$app/navigation'
+
+  export let data: LayoutData
   storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow })
   initializeStores()
+
+  const drawerStore = createDrawerStore()
+  setContext('jb_drawerStore', drawerStore)
+  onNavigate(n => drawerStore.close({ withHistory: false }))
 </script>
 
 <!-- Background -->
@@ -22,9 +32,6 @@
   class="absolute inset-0 -z-50 !bg-[url('/bg.svg')] bg-repeat opacity-20 animate-bg-move-fast md:animate-none"
 ></div>
 
-<!-- Global Toast -->
+<SubjectDrawer subjects={data.subjects} />
 <Toast />
-<!-- Not using drawers or modals here to allow dynamic culling of html -->
-
-<!-- Main slow -->
 <slot />

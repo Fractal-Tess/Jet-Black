@@ -3,7 +3,18 @@
 // and what to do when importing types
 declare namespace App {
   interface Locals {
-    user: import('$lib/user').User | null
+    user:
+      | {
+          info: import('$lib/user').User
+          directus: typeof import('$lib/directus').directus
+        }
+      | {
+          info: null
+          directus: typeof import('$lib/directus').directus
+        }
+  }
+  interface PageState {
+    showDrawer: boolean
   }
   // interface PageData {}
   // interface Error {}

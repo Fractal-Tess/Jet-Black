@@ -1,5 +1,7 @@
 import { asyncTryOrElse } from '$lib/utils'
 import { Result, Unit } from 'true-myth'
+import { createItems, createUser, readItem, readItems } from '@directus/sdk'
+import { directus } from '$lib/directus'
 import { z } from 'zod'
 
 export const registerSchema = z
@@ -23,5 +25,15 @@ export async function register(
 ): Promise<Result<unknown, RegisterErr>> {
   // Attempt Create the record
 
-  return Result.ok(Unit)
+  const res = await asyncTryOrElse(
+    async () =>
+      await directus.request(
+        createUser({
+          email: credentials.email,
+          password: credentials.password,
+          role: '9c56c08b-220a-40a3-9c50-9c43337ca6cd'
+        })
+      )
+  )
+  return Result.ok(res)
 }

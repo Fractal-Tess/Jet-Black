@@ -11,6 +11,6 @@
     "strict": true,
     "moduleResolution": "bundler",
     "noUncheckedIndexedAccess": true,
-    "verbatimModuleSyntax": true,
+    "verbatimModuleSyntax": true
   }
 }

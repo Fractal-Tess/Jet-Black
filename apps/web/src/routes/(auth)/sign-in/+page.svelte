@@ -1,14 +1,15 @@
 <script lang="ts">
-  import Fa from 'svelte-fa'
-  import { faGoogle } from '@fortawesome/free-brands-svg-icons'
+  import SSO from '$lib/components/SSO.svelte'
   import { superForm, superValidateSync } from 'sveltekit-superforms/client'
   import { z } from 'zod'
-  import { goto } from '$app/navigation'
   import { ProgressRadial } from '@skeletonlabs/skeleton'
   import { getToastStore } from '@skeletonlabs/skeleton'
-  import { login, type LoginAction } from '$lib/auth/login'
-
-  const toastStore = getToastStore()
+  import { faGoogle } from '@fortawesome/free-brands-svg-icons'
+  import Fa from 'svelte-fa'
+  import { login } from '@directus/sdk'
+  import { directus } from '$lib/directus'
+  import { env } from '$env/dynamic/public'
+  import { page } from '$app/stores'
 
   let showSpinner = false
   const loginSchema = z.object({
@@ -24,10 +25,9 @@
       onUpdate: async ({ form }) => {
         if (form.valid) {
           showSpinner = true
-          _login({
-            credentials: form.data,
-            method: 'CREDENTIALS'
-          })
+          const res = await directus.request(
+            login(form.data.email, form.data.password)
+          )
         }
 
         showSpinner = false
@@ -35,18 +35,6 @@
       }
     }
   )
-
-  async function _login(action: LoginAction) {
-    const res = await login(action)
-    if (res.isErr) {
-      toastStore.trigger({
-        message: res.error.message,
-        background: 'variant-filled-error'
-      })
-    } else {
-      await goto('/', { invalidateAll: true })
-    }
-  }
 </script>
 
 <div class="flex-1 gap-y-8 flex flex-col items-center justify-center">
@@ -77,6 +65,7 @@
     <label class="label w-full">
       <span>Парола</span>
       <input
+        autocomplete="current-password"
         aria-invalid={$errors.password ? 'true' : undefined}
         {...$constraints.password}
         bind:value={$form.password}
@@ -106,14 +95,5 @@
   >
     <span class="flex-[0.2_0_auto]">или</span>
   </div>
-
-  <div class="grid gap-4 w-full">
-    <button
-      on:click={() => _login({ method: 'GOOGLE' })}
-      class="flex justify-center items-center gap-x-4 variant-outline w-full h-10"
-    >
-      <span><Fa icon={faGoogle} /></span>
-      <span>Google</span>
-    </button>
-  </div>
+  <SSO />
 </div>
