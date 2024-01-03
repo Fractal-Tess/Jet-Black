@@ -20,7 +20,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 20.10
+          node-version: 20.3
 
       - uses: pnpm/action-setup@v2
         name: Install pnpm
@@ -48,9 +48,11 @@ jobs:
 
       - name: Build
         env:
-          PUBLIC_TRPC_URL: ${{ vars.PUBLIC_TRPC_URL }}
-          PUBLIC_POCKETBASE_URL: ${{ vars.PUBLIC_POCKETBASE_URL }}
-          PUBLIC_ORIGIN_URL: ${{ vars.PUBLIC_ORIGIN_URL }}
+          PUBLIC_DIRECTUS_URL: https://directus-jet-black.app.jet-black.xyz
+          PUBLIC_ORIGIN: https://jet-black.xyz
+          TURBO_TOKEN: ${{ secrets.TURBOREPO_CACHE_TOKEN }}
+          TURBO_TEAM: team_jet-black
+          TURBO_API: https://turborepo-cache.app.jet-black.xyz
         run: pnpm turbo build --filter web
 
       - uses: a7ul/tar-action@v1.1.0
