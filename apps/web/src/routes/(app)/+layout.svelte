@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { getToastStore, popup } from '@skeletonlabs/skeleton'
+  import { shortcut } from '@svelte-put/shortcut'
+  import { Avatar, getToastStore, popup } from '@skeletonlabs/skeleton'
   import type { PopupSettings } from '@skeletonlabs/skeleton'
   import { AppShell, AppBar } from '@skeletonlabs/skeleton'
   import Fa from 'svelte-fa'
@@ -7,11 +8,16 @@
     faBarsStaggered,
     faMagnifyingGlass
   } from '@fortawesome/free-solid-svg-icons'
-  import type { PageData } from './$types'
   import { page } from '$app/stores'
   import { getContext, onMount } from 'svelte'
   import type { createDrawerStore } from '$lib/stores'
+
+  import type { PageData } from './$types'
+  import AvatarPopUp from '$lib/components/AvatarPopUp.svelte'
+  import { directusAsset } from '$lib/directus'
   export let data: PageData
+
+  const { user } = data
 
   let mounted = false
   onMount(() => (mounted = true))
@@ -26,21 +32,28 @@
     typeof createDrawerStore
   >
 
-  // TODO: Implement search functionality
   const toast = getToastStore()
   function search() {
     toast.trigger({
-      message: 'Имплементацията на тази функция все още не е приключила',
+      message: 'Все още не работи',
       background: 'variant-filled-error'
     })
   }
 </script>
 
-<!-- App Shell -->
+<svelte:window
+  use:shortcut={{
+    trigger: {
+      preventDefault: true,
+      key: 'k',
+      modifier: ['ctrl', 'meta'],
+      callback: search
+    }
+  }}
+/>
+
 <AppShell>
   <svelte:fragment slot="header">
-    <!-- App Bar -->
-
     <AppBar
       shadow="shadow-2xl"
       class={`${
@@ -49,11 +62,16 @@
     >
       <svelte:fragment slot="lead">
         <a href="/" class="block">
-          <img src="/jb/Jet-Black.svg" alt="logo" class="h-10 invert" />
+          <img
+            src="/logo_white.svg"
+            alt="logo"
+            class={`h-10 duration-1000 transition-all ${
+              $drawerStore ? 'opacity-0' : 'opacity-100'
+            }`}
+          />
         </a>
       </svelte:fragment>
       <svelte:fragment slot="trail">
-        <!-- TODO: Implement a search function -->
         <button
           on:click={search}
           class="hidden md:flex btn space-x-4 variant-soft hover:variant-soft-primary"
@@ -67,14 +85,20 @@
           <Fa icon={faBarsStaggered} />
         </button>
         <div class="border-l-[1px] opacity-50 block h-8" />
-        {#if false}
+        {#if user}
+          <AvatarPopUp {user} />
           <button
             class="transition-all after:inset-0 relative after:absolute
                after:pointer-events-none after:select-none after:hover:outline-dashed after:hover:animate-spin-slow after:rounded-full after:hover:outline-1"
             use:popup={userAvatarPopup}
           >
-            <!-- <AvatarPopUp {avatarUrl} {user} /> -->
-            <!-- <Avatar src={avatarUrl} width="w-10" rounded="rounded-full" /> -->
+            <Avatar
+              src={directusAsset(
+                user.avatar?.toString() + '?height=40&width=40'
+              )}
+              width="w-10"
+              rounded="rounded-full"
+            />
           </button>
           <!-- Display profile -->
         {:else}
@@ -90,5 +114,6 @@
       </svelte:fragment>
     </AppBar>
   </svelte:fragment>
+
   <slot />
 </AppShell>

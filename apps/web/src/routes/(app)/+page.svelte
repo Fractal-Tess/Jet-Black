@@ -1,14 +1,15 @@
 <script lang="ts">
   import type { createDrawerStore } from '$lib/stores'
   import anime from 'animejs'
+
   import { getContext, onMount } from 'svelte'
   const drawerStore = getContext('jb_drawerStore') as ReturnType<
     typeof createDrawerStore
   >
 
-  let animationHidden = true
   let animator: HTMLDivElement
   let mounted = false
+
   onMount(() => {
     mounted = true
     const bigDarkRectangle = anime
@@ -81,15 +82,9 @@
         easing: 'easeInOutExpo'
       })
 
-    function init() {
-      animator.classList.add('anime-ready')
-      animationHidden = false
-      setTimeout(function () {
-        bigDarkRectangle.play()
-      }, 500)
-    }
-
-    init()
+    setTimeout(function () {
+      bigDarkRectangle.play()
+    }, 500)
   })
 </script>
 
@@ -137,13 +132,12 @@
         : 'after:opacity-0 before:opacity-0'
     }
     `}
-    class:opacity-0={animationHidden}
   >
     <div class="absolute z-10 inset-0 flex items-center justify-center">
       <img
-        src="/jb/Jet-Black.svg"
+        src="/logo_white.svg"
         alt="logo"
-        class={`invert !delay-[2000ms] transition-all duration-1000 ${
+        class={`!delay-[2000ms] transition-all duration-1000 pointer-events-none  ${
           mounted
             ? 'opacity-100 w-20 drop-shadow-[0_0_0.75rem_rgba(var(--color-primary-500))]'
             : 'opacity-0 w-0'
@@ -191,11 +185,11 @@
   }
   .hero-figure::after {
     @apply -top-[35%] left-full w-1/2 h-[90%];
-    background-image: url('/images/hero-top-illustration.svg');
+    background-image: url('/assets/hero-top-illustration.svg');
   }
   .hero-figure::before {
     @apply -top-1/2 w-[150%] h-[175%];
-    background-image: url('/images/hero-back-illustration.svg');
+    background-image: url('/assets/hero-back-illustration.svg');
   }
   .hero-figure-box {
     @apply absolute top-0 will-change-transform;
