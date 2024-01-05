@@ -1,33 +1,30 @@
 <script lang="ts">
   import { Drawer, ListBox, ListBoxItem } from '@skeletonlabs/skeleton'
   import type { Subject } from '$lib/directus'
-  import {
-    faArrowLeftLong,
-    faLeftLong
-  } from '@fortawesome/free-solid-svg-icons'
+  import { faArrowLeftLong } from '@fortawesome/free-solid-svg-icons'
   import Fa from 'svelte-fa'
   import { getContext } from 'svelte'
   import type { createDrawerStore } from '$lib/stores'
-  import SubjectNav from './SubjectNav.svelte'
+  import SubjectNav from './SubjectList.svelte'
+  import { page } from '$app/stores'
 
-  let activeSlug = 'Физика'
   const drawerStore = getContext('jb_drawerStore') as ReturnType<
     typeof createDrawerStore
   >
 
   export let subjects: Subject[]
 
-  // $: if (!$page.state.showDrawer) drawerStore.close({ withHistory: false })
+  $: if (!$page.state.showDrawer) drawerStore.close()
 </script>
 
 <svelte:window
   on:keydown={e => {
     if (e.key === 'Escape' && $drawerStore)
-      drawerStore.close({ withHistory: false })
+      drawerStore.close({ withHistory: true })
   }}
 />
 
-<Drawer on:backdrop={() => drawerStore.close({ withHistory: false })}>
+<Drawer on:backdrop={() => drawerStore.close({ withHistory: true })}>
   <section
     class="relative flex flex-col flex-1 h-full p-4 justify-around mx-auto"
   >

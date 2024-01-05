@@ -12,26 +12,27 @@
     arrow
   } from '@floating-ui/dom'
   import { createDrawerStore } from '$lib/stores'
-  import { onMount, setContext } from 'svelte'
-  import SubjectDrawer from '$lib/components/SubjectDrawer.svelte'
-
-  import type { LayoutData } from './$types'
+  import { setContext } from 'svelte'
+  import Drawer from '$lib/components/Drawer.svelte'
   import { onNavigate } from '$app/navigation'
 
+  import type { LayoutData } from './$types'
   export let data: LayoutData
+  let { subjects } = data
+
   storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow })
   initializeStores()
 
   const drawerStore = createDrawerStore()
   setContext('jb_drawerStore', drawerStore)
-  onNavigate(n => drawerStore.close({ withHistory: false }))
+
+  // import Foo from '$lib/components/diagrams/Foo.svelte'
 </script>
 
-<!-- Background -->
 <div
-  class="absolute inset-0 -z-50 !bg-[url('/bg.svg')] bg-repeat opacity-20 animate-bg-move-fast md:animate-none"
+  class="absolute inset-0 -z-50 !bg-[url('/assets/topology.svg')] bg-repeat opacity-20 animate-bg-move-fast md:animate-none"
 ></div>
 
-<SubjectDrawer subjects={data.subjects} />
+<Drawer {subjects} />
 <Toast />
 <slot />
