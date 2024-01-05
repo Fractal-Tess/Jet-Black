@@ -1,27 +1,28 @@
 <script lang="ts">
-  import type { User } from '$lib/user'
   import { Avatar } from '@skeletonlabs/skeleton'
-  export let user: User
-  export let avatarUrl: string
+  import { directusAsset, type getUser } from '$lib/directus'
+  export let user: NonNullable<Awaited<ReturnType<typeof getUser>>>
 </script>
 
 <div class="card p-4 w-72 shadow-xl" data-popup="userAvatarPopup">
   <div class="space-y-4 flex items-center justify-center flex-col">
-    <Avatar src={avatarUrl} width="w-16" background={'bg-transparent'} />
+    <Avatar
+      src={directusAsset(user.avatar?.toString() + '?height=64&width=64')}
+      width="w-16"
+      background={'bg-transparent'}
+    />
     <div>
-      <p class="font-bold">{user.username}</p>
+      <p class="font-bold">{user.first_name} {user.last_name}</p>
     </div>
     <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p>
     <div class="w-full flex justify-around"></div>
+    <a class="btn variant-filled w-full" href="/dashboard"> Табло</a>
     <a
-      class="btn variant-filled w-full"
       data-sveltekit-preload-data="off"
       data-sveltekit-preload-code="off"
-      href="/dashboard"
+      href="/logout"
+      class="btn variant-soft-surface w-full">Излез</a
     >
-      Табло</a
-    >
-    <a href="/auth/logout" class="btn variant-soft-surface w-full">Излез</a>
   </div>
   <div class="arrow bg-surface-100-800-token" />
 </div>

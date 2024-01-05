@@ -3,7 +3,7 @@
   import { env } from '$env/dynamic/public'
   import { faGoogle } from '@fortawesome/free-brands-svg-icons'
   import Fa from 'svelte-fa'
-  const redirect = $page.url.searchParams.get('redirect') || '/'
+  let redirect = $page.url.searchParams.get('redirect') || ''
 </script>
 
 <ul class="w-full">
