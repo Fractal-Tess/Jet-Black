@@ -1,10 +1,12 @@
 import type { CoreSchema } from '@directus/sdk'
 
-type Status = 'draft' | 'released' | null
+type Status = 'draft' | 'published' | 'archived'
 
 export type Schema = {
   subject: Subject[]
-  subject_section: SubjectSection[]
+  chapter: Chapter[]
+  lesson: Lesson[]
+  lesson_chunk: LessonChunk[]
 } & CoreSchema
 
 export type Subject = {
@@ -14,16 +16,30 @@ export type Subject = {
   label: string
   description: string | null
 }
-export type SubjectSection = {
+export type Chapter = {
   id: string
-  sort: null
   label: string
-  description: string | null
-  thumbnail: string
-  requires_subscription: string
   subject: Subject
+  svg_icon: string | null
+  description: string | null
+  sub_chapters: Chapter[]
+  parent_chapter: Chapter
+  lessons: Lesson[]
   status: Status
-  top_level: boolean
-  parent: SubjectSection
-  children: SubjectSection[] 
+  sort: null
+}
+
+export type Lesson = {
+  id: string
+  label: string
+  lesson_chunks: LessonChunk[]
+  chapter: Chapter
+  status: Status
+}
+
+export type LessonChunk = {
+  id: string
+  label: string
+  lesson: Lesson
+  status: Status
 }
