@@ -2,32 +2,58 @@
   import SSO from '$lib/components/SSO.svelte'
   import { superForm, superValidateSync } from 'sveltekit-superforms/client'
   import { z } from 'zod'
-  import { ProgressRadial } from '@skeletonlabs/skeleton'
-  import { getToastStore } from '@skeletonlabs/skeleton'
-  import { faGoogle } from '@fortawesome/free-brands-svg-icons'
-  import Fa from 'svelte-fa'
-  import { login } from '@directus/sdk'
+  import { ProgressRadial, getToastStore } from '@skeletonlabs/skeleton'
   import { directus } from '$lib/directus'
-  import { env } from '$env/dynamic/public'
   import { page } from '$app/stores'
+  import { asyncTryOrElse } from '$lib/utils'
+  import { goto } from '$app/navigation'
+  import { env } from '$env/dynamic/public'
+  import { Result } from 'true-myth'
 
   let showSpinner = false
   const loginSchema = z.object({
-    email: z.string().email().default('vgfractal@gmail.com'),
-    password: z.string().min(8).default('123123123')
+    email: z.string().email(),
+    password: z.string().min(8)
   })
+
+  const toastStore = getToastStore()
 
   const { form, enhance, constraints, errors } = superForm(
     superValidateSync(loginSchema),
     {
       SPA: true,
       validators: loginSchema,
-      onUpdate: async ({ form }) => {
+      onUpdate: async ({ form, cancel }) => {
+        cancel()
         if (form.valid) {
           showSpinner = true
-          const res = await directus.request(
-            login(form.data.email, form.data.password)
+
+          const res = await asyncTryOrElse(
+            async () =>
+              await directus.login(form.data.email, form.data.password),
+            e => {
+              console.error(e)
+              return Result.err(e)
+            }
           )
+
+          if (res.isErr) {
+            toastStore.trigger({
+              message: 'Невалиден емайл или парола',
+              autohide: true,
+              timeout: 5000,
+              background: 'variant-filled-error'
+            })
+          } else {
+            await goto(
+              `${env.PUBLIC_ORIGIN}${
+                $page.url.searchParams.get('redirect') || ''
+              }`,
+              {
+                invalidateAll: true
+              }
+            )
+          }
         }
 
         showSpinner = false
@@ -46,7 +72,7 @@
   >
     {#if $errors._errors}
       <span
-        class="bg-error-500 text-on-error-token max-w-[340px] [text-wrap:balance] text-center text-xl"
+        class="bg-error-500 text-on-error-token max-w-[340px] [text-wrap:balance] text-center text-xl p-2 px-4 rounded-md"
       >
         {$errors._errors[0]}
       </span>
@@ -54,6 +80,7 @@
     <label class="label w-full">
       <span>Емайл</span>
       <input
+        autocomplete="email"
         {...$constraints.email}
         aria-invalid={$errors.email ? 'true' : undefined}
         bind:value={$form.email}
@@ -86,7 +113,7 @@
     </button>
     <div class="flex gap-x-2">
       <span> Нямате акаунт? </span>
-      <a href="/auth/register" class="anchor no-underline">Създайте нов!</a>
+      <a href="/register" class="anchor no-underline">Създайте нов!</a>
     </div>
   </form>
 
