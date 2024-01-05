@@ -11,10 +11,13 @@ const drawerSettings: DrawerSettings = {
 
 export function createDrawerStore() {
   const drawer = getDrawerStore()
-  const { subscribe, set } = writable<Boolean>(false)
+  const { subscribe, set } = writable(false)
 
-  function close(opts: { withHistory: boolean }) {
-    console.log('close')
+  function close(
+    opts: { withHistory: boolean } = {
+      withHistory: false
+    }
+  ) {
     set(false)
     drawer.close()
     if (opts.withHistory) history.back()
