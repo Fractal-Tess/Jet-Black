@@ -10,6 +10,7 @@
   import { getToastStore } from '@skeletonlabs/skeleton'
   import { goto } from '$app/navigation'
   import { register, registerSchema } from '$lib/auth/register'
+  import { page } from '$app/stores'
 
   const toastStore = getToastStore()
 
@@ -118,7 +119,7 @@
 
     <div class="flex gap-x-2">
       <span>Имате акаунт? </span>
-      <a href="/auth/sign-in" class="anchor no-underline">Влезте в него!</a>
+      <a href="/sign-in" class="anchor no-underline">Влезте в него!</a>
     </div>
   </form>
 
