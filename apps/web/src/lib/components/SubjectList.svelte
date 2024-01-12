@@ -4,14 +4,17 @@
   export let subjects: Subject[]
 </script>
 
-<ul class=" p-8 flex flex-col mx-auto">
+<ul class="p-8 flex flex-col mx-auto">
   {#each subjects.sort( (s1, s2) => s1.label.localeCompare(s2.label) ) as subject, i}
     <li
-      class="inline-flex items-center gap-x-3.5 py-3 px-4 -mt-px text-sm font-medium border variant-outline first:rounded-t-lg first:mt-0 last:rounded-b-lg"
+      class="first:rounded-t-md last:rounded-b-md variant-outline font-bold inline-flex"
     >
-      <a href={`/learn/${encodeURI(subject.label)}`} class="contents">
+      <a
+        href={`/learn/${encodeURI(subject.label)}`}
+        class="inline-flex px-8 items-center gap-x-3.5 py-4 -mt-px w-full"
+      >
         <div
-          class="h-6 w-6 overflow-hidden fill-black dark:fill-white [&>svg]:h-full [&>svg]:w-full ]"
+          class="h-4 w-4 overflow-hidden fill-black dark:fill-white [&>svg]:h-full [&>svg]:w-full"
         >
           {@html subject.svg_icon}
         </div>
