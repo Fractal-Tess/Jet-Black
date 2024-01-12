@@ -14,7 +14,6 @@
   import { createDrawerStore } from '$lib/stores'
   import { setContext } from 'svelte'
   import Drawer from '$lib/components/Drawer.svelte'
-  import { onNavigate } from '$app/navigation'
 
   import type { LayoutData } from './$types'
   export let data: LayoutData
@@ -25,8 +24,6 @@
 
   const drawerStore = createDrawerStore()
   setContext('jb_drawerStore', drawerStore)
-
-  // import Foo from '$lib/components/diagrams/Foo.svelte'
 </script>
 
 <div
