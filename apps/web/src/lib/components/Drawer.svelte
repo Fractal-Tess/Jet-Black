@@ -29,11 +29,9 @@
     class="relative flex flex-col flex-1 h-full p-4 justify-around mx-auto"
   >
     <div class="relative flex items-center">
-      <img
-        src="/jb/Jet-Black.svg"
-        alt="logo"
-        class="w-16 mx-auto invert md:hidden"
-      />
+      <a href="/" class=" mx-auto p-4">
+        <img src="/logo_white.svg" alt="logo" class="w-16 mx-auto" />
+      </a>
       <button on:click={close} class=" absolute md:hidden p-4">
         <Fa icon={faArrowLeftLong} size="2.5x" />
       </button>
