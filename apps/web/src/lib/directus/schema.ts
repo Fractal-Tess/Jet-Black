@@ -11,7 +11,7 @@ export type Schema = {
 
 export type Subject = {
   id: string
-  icon: string | null
+  svg_icon: string | null
   status: Status | null
   label: string
   description: string | null

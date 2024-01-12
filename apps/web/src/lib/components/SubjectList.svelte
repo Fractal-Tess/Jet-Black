@@ -13,7 +13,7 @@
         <div
           class="h-6 w-6 overflow-hidden fill-black dark:fill-white [&>svg]:h-full [&>svg]:w-full ]"
         >
-          {@html subject.icon}
+          {@html subject.svg_icon}
         </div>
         <h3>
           {subject.label}
