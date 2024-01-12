@@ -1,13 +1,9 @@
 <script lang="ts">
-  import { shortcut } from '@svelte-put/shortcut'
-  import { Avatar, getToastStore, popup } from '@skeletonlabs/skeleton'
+  import { Avatar, popup } from '@skeletonlabs/skeleton'
   import type { PopupSettings } from '@skeletonlabs/skeleton'
   import { AppShell, AppBar } from '@skeletonlabs/skeleton'
   import Fa from 'svelte-fa'
-  import {
-    faBarsStaggered,
-    faMagnifyingGlass
-  } from '@fortawesome/free-solid-svg-icons'
+  import { faBarsStaggered } from '@fortawesome/free-solid-svg-icons'
   import { page } from '$app/stores'
   import { getContext, onMount } from 'svelte'
   import type { createDrawerStore } from '$lib/stores'
@@ -31,29 +27,12 @@
   const drawerStore = getContext('jb_drawerStore') as ReturnType<
     typeof createDrawerStore
   >
-
-  const toast = getToastStore()
-  function search() {
-    toast.trigger({
-      message: 'Все още не работи',
-      background: 'variant-filled-error'
-    })
-  }
 </script>
 
-<svelte:window
-  use:shortcut={{
-    trigger: {
-      preventDefault: true,
-      key: 'k',
-      modifier: ['ctrl', 'meta'],
-      callback: search
-    }
-  }}
-/>
-
 <AppShell>
+  <!-- HEADER -->
   <svelte:fragment slot="header">
+    <!-- HEADER APP-BAR -->
     <AppBar
       shadow="shadow-2xl"
       class={`${
@@ -61,31 +40,23 @@
       } transition-all duration-1000 delay-1000`}
     >
       <svelte:fragment slot="lead">
-        <a href="/" class="block">
-          <img
-            src="/logo_white.svg"
-            alt="logo"
-            class={`h-10 duration-1000 transition-all ${
-              $drawerStore ? 'opacity-0' : 'opacity-100'
-            }`}
-          />
-        </a>
-      </svelte:fragment>
-      <svelte:fragment slot="trail">
+        <!-- LEFT SIDE-->
         <button
-          on:click={search}
-          class="hidden md:flex btn space-x-4 variant-soft hover:variant-soft-primary"
-          ><Fa icon={faMagnifyingGlass} />
-          <span class="hidden md:block"> Ctrl + K </span></button
-        >
-        <button
-          class="btn max-md:btn-sm variant-filled"
+          class:opacity-0={$drawerStore}
+          class="btn max-md:btn-sm variant-filled transition-opacity"
           on:click={drawerStore.open}
         >
           <Fa icon={faBarsStaggered} />
         </button>
+      </svelte:fragment>
+
+      <svelte:fragment slot="trail">
+        <!-- RIGHT SIDE -->
+
         <div class="border-l-[1px] opacity-50 block h-8" />
+        <!-- Login/Register /-/ User -->
         {#if user}
+          <!-- User -->
           <AvatarPopUp {user} />
           <button
             class="transition-all after:inset-0 relative after:absolute
@@ -100,8 +71,8 @@
               rounded="rounded-full"
             />
           </button>
-          <!-- Display profile -->
         {:else}
+          <!-- Login/Register -->
           <a
             href={`/sign-in?redirect=${$page.url.pathname}`}
             class="btn max-md:btn-sm variant-outline no-underline">Вход</a
@@ -115,5 +86,6 @@
     </AppBar>
   </svelte:fragment>
 
+  <!-- Main content -->
   <slot />
 </AppShell>
