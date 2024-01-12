@@ -1,4 +1,5 @@
-import { join } from 'path'
+import { join } from 'node:path'
+import { theme } from './theme'
 import { fontFamily } from 'tailwindcss/defaultTheme'
 import type { Config } from 'tailwindcss'
 import forms from '@tailwindcss/forms'
@@ -37,12 +38,7 @@ export default {
     typography,
     skeleton({
       themes: {
-        preset: [
-          {
-            name: 'wintry',
-            enhancements: true
-          }
-        ]
+        custom: [theme]
       }
     })
   ]

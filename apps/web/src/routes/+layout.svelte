@@ -26,10 +26,6 @@
   setContext('jb_drawerStore', drawerStore)
 </script>
 
-<div
-  class="absolute inset-0 -z-50 !bg-[url('/assets/topology.svg')] bg-repeat opacity-20 animate-bg-move-fast md:animate-none"
-></div>
-
 <Drawer {subjects} />
 <Toast />
 <slot />
