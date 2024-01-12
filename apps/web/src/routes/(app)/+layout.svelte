@@ -53,7 +53,6 @@
       <svelte:fragment slot="trail">
         <!-- RIGHT SIDE -->
 
-        <div class="border-l-[1px] opacity-50 block h-8" />
         <!-- Login/Register /-/ User -->
         {#if user}
           <!-- User -->
