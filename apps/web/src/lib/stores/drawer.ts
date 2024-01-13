@@ -5,7 +5,6 @@ import { pushState } from '$app/navigation'
 const drawerSettings: DrawerSettings = {
   bgBackdrop: 'bg-gradient-to-tr from-black to-black-500/75',
   duration: 500,
-  bgDrawer: 'bg-gradient-to-r from-black to-black-500/35 max-md:bg-black',
   width: 'max-md:w-full'
 }
 

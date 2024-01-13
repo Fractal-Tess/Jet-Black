@@ -7,7 +7,7 @@
 <ul class="p-8 flex flex-col mx-auto">
   {#each subjects.sort( (s1, s2) => s1.label.localeCompare(s2.label) ) as subject, i}
     <li
-      class="first:rounded-t-md last:rounded-b-md variant-outline font-bold inline-flex"
+      class="first:rounded-t-md last:rounded-b-md variant-outline-primary font-bold inline-flex"
     >
       <a
         href={`/learn/${encodeURI(subject.label)}`}
