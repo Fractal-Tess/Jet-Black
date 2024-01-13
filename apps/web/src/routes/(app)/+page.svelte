@@ -104,10 +104,9 @@
     <h1 class="h1 mt-0 max-lg:text-center font-extrabold">Jet-Black</h1>
     <p class="opacity-75 max-sm:text-center">
       <b>Jet-Black</b>
-      е нова иновативна платформа предлагаща набор от специализирани уроци упражнения
-      и тестове фокусиращи се върху материала изучаван от студентите в началните
-      курсове в
-      <b> TU-Sofia</b>.
+      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Labore alias iure
+      enim! Consectetur repellat tempore fugiat unde qui praesentium quod iure, aliquid
+      reprehenderit fugit molestiae voluptatum? Doloribus iure aspernatur modi?
     </p>
     <div class="flex max-lg:justify-center space-x-4 d">
       <a
@@ -138,9 +137,7 @@
         src="/logo_white.svg"
         alt="logo"
         class={`!delay-[2000ms] transition-all duration-1000 pointer-events-none  ${
-          mounted
-            ? 'opacity-100 w-20 drop-shadow-[0_0_0.75rem_rgba(var(--color-primary-500))]'
-            : 'opacity-0 w-0'
+          mounted ? 'opacity-100 w-20' : 'opacity-0 w-0'
         }`}
       />
     </div>
