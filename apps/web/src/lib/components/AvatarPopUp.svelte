@@ -21,7 +21,7 @@
       data-sveltekit-preload-data="off"
       data-sveltekit-preload-code="off"
       href="/logout"
-      class="btn variant-soft-surface w-full">Излез</a
+      class="btn variant-outline w-full">Излез</a
     >
   </div>
   <div class="arrow bg-surface-100-800-token" />
