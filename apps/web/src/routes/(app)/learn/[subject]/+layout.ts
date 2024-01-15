@@ -1,7 +1,8 @@
-import { getChapters } from '$lib/directus'
+import { getSubSubjects } from '$lib/directus'
 import type { LayoutLoad } from './$types'
 
 export const load = (async ({ params }) => {
-  const chapters = await getChapters(params.subject)
-  return { chapters }
+  const subSubjects = await getSubSubjects(params.subject)
+
+  return { subSubjects, subject: params.subject }
 }) satisfies LayoutLoad
