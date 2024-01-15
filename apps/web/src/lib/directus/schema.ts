@@ -4,6 +4,7 @@ type Status = 'draft' | 'published' | 'archived'
 
 export type Schema = {
   subject: Subject[]
+  sub_subject: SubSubject[]
   chapter: Chapter[]
   lesson: Lesson[]
   lesson_chunk: LessonChunk[]
@@ -11,20 +12,26 @@ export type Schema = {
 
 export type Subject = {
   id: string
-  svg_icon: string | null
-  status: Status | null
   label: string
-  description: string | null
+  icon: string
+  sub_subjects: SubSubject[] | null
+  status: Status
 }
+
+export type SubSubject = {
+  id: string
+  label: string
+  icon: string
+  status: Status
+  chapters: Chapter[]
+}
+
 export type Chapter = {
   id: string
   label: string
-  subject: Subject
-  svg_icon: string | null
-  description: string | null
-  sub_chapters: Chapter[]
-  parent_chapter: Chapter
-  lessons: Lesson[]
+  icon: string
+  sub_subject: SubSubject
+  lessons:Lesson[]
   status: Status
   sort: null
 }
