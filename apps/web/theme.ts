@@ -4,8 +4,8 @@ export const theme: CustomThemeConfig = {
   name: 'jet-black',
   properties: {
     // =~= Theme Properties =~=
-    '--theme-font-family-base': `system-ui`,
-    '--theme-font-family-heading': `system-ui`,
+    '--theme-font-family-base': 'system-ui',
+    '--theme-font-family-heading': 'system-ui',
     '--theme-font-color-base': '0 0 0',
     '--theme-font-color-dark': '255 255 255',
     '--theme-rounded-base': '9999px',
@@ -87,15 +87,15 @@ export const theme: CustomThemeConfig = {
     '--color-error-800': '152 25 31', // #98191f
     '--color-error-900': '124 21 25', // #7c1519
     // surface | #141414
-    '--color-surface-50': '220 220 220', // #dcdcdc
-    '--color-surface-100': '208 208 208', // #d0d0d0
-    '--color-surface-200': '196 196 196', // #c4c4c4
-    '--color-surface-300': '161 161 161', // #a1a1a1
-    '--color-surface-400': '91 91 91', // #5b5b5b
-    '--color-surface-500': '20 20 20', // #141414
-    '--color-surface-600': '18 18 18', // #121212
-    '--color-surface-700': '15 15 15', // #0f0f0f
-    '--color-surface-800': '12 12 12', // #0c0c0c
-    '--color-surface-900': '10 10 10' // #0a0a0a
+    '--color-surface-50': '220 220 220',
+    '--color-surface-100': '208 208 208',
+    '--color-surface-200': '196 196 196',
+    '--color-surface-300': '49 49 49',
+    '--color-surface-400': '36 36 36',
+    '--color-surface-500': '44 44 44',
+    '--color-surface-600': '30 30 30',
+    '--color-surface-700': '19 19 19',
+    '--color-surface-800': '14 14 14',
+    '--color-surface-900': '10 10 10'
   }
 }
